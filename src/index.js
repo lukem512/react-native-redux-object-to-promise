@@ -56,8 +56,6 @@ export default ({
     let promise
     switch(driver) {
       case driver.FETCH:
-        const fetch = require('node-fetch')
-
         const url = driverOptions.baseURL
           ? driverOptions.baseURL + driverOptions.url
           : driverOptions.url
