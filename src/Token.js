@@ -1,6 +1,8 @@
-export default ({storage = window.localStorage, key = 'token-key'} = {}) => {
+import { AsyncStorage } from 'react-native';
+
+export default (key = 'token-key') => {
   let token = ''
-  const getter = storage.getItem(key)
+  const getter = AsyncStorage.getItem(key)
   if (typeof getter === 'string') {
     token = getter
   } else if (getter && getter.then) {
@@ -9,7 +11,7 @@ export default ({storage = window.localStorage, key = 'token-key'} = {}) => {
   return {
     set (t) {
       token = t
-      return storage.setItem(key, t)
+      return AsyncStorage.setItem(key, t)
     },
     get () {
       return token

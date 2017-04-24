@@ -1,7 +1,7 @@
 {
-  "name": "redux-object-to-promise",
-  "version": "0.3.0",
-  "description": "Redux middleware to transform an object into a promise",
+  "name": "react-native-redux-object-to-promise",
+  "version": "0.1.0",
+    "description": "Redux middleware to transform an object into a promise for React Native apps",
   "main": "build/index.js",
   "jsnext:main": "src/index.js",
   "files": [
@@ -14,22 +14,25 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mathieudutour/redux-object-to-promise.git"
+    "url": "https://github.com/lukem512/react-native-redux-object-to-promise.git"
   },
-  "homepage": "https://github.com/mathieudutour/redux-object-to-promise",
+  "homepage": "https://github.com/lukem512/react-native-redux-object-to-promise",
   "keywords": [
+    "react",
+    "native",
+    "fetch",
     "redux",
     "promise",
     "middleware",
     "redux-middleware",
     "object"
   ],
-  "author": "Mathieu Dutour <mathieu@dutour.me>",
+  "author": "Luke Mitchell",
   "license": "MIT",
   "devDependencies": {
     "@mathieudutour/js-fatigue": "^1.0.2"
   },
   "dependencies": {
-    "axios": "^0.13.1",
+    "react-native": "^0.43.4"
   }
 }

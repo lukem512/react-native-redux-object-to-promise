@@ -1,27 +1,18 @@
 import Token from './Token'
 
-export const driver = {
-  AXIOS: 'AXIOS',
-  FETCH: 'FETCH'
-};
-
 export default ({
   keyIn = 'promise',
   keyOut = 'promise',
-  driver = driver.AXIOS,
-  driverOptions: _driverOptions = {},
-  tokenOptions = {},
-  axiosOptions
+  fetchOptions = {},
+  tokenOptions = {}
 } = {}) => {
   const token = new Token(tokenOptions)
 
   return () => next => action => {
-    // check if we don't need to transform the promise
+    // check whether we need to transform the promise
     if (!action.meta || !action.meta[keyIn] || typeof action.meta[keyIn] !== 'object') {
       return next(action)
     }
-
-    const driverOptions = _driverOptions || axiosOptions
 
     const {
       method = 'get',
@@ -51,41 +42,22 @@ export default ({
       }
     }
 
-    const {transformResponse = [], ...restOfDriverOptions} = driverOptions
+    const {transformResponse = [], ...restOfFetchOptions} = fetchOptions
+    const url = fetchOptions.baseURL
+      ? fetchOptions.baseURL + fetchOptions.url
+      : fetchOptions.url
 
-    let promise
-    switch(driver) {
-      case driver.FETCH:
-        const url = driverOptions.baseURL
-          ? driverOptions.baseURL + driverOptions.url
-          : driverOptions.url
+    promise = fetch(url, {
+      ...restOfFetchOptions,
+      method: method.toUpperCase(),
+      headers,
+      body: fetchOptions.data,
+      ...rest
+    }).then(defaultTransform)
 
-        promise = fetch(url, {
-          ...restOfDriverOptions,
-          method: method.toUpperCase(),
-          headers,
-          body: driverOptions.data,
-          ...rest
-        }).then(defaultTransform)
-
-        transformResponse.forEach(d => {
-          promise = promise.then(d)
-        })
-      break
-
-      case driver.AXIOS:
-      default:
-        const axios = require('axios');
-
-        const promise = axios({
-          ...restOfDriverOptions,
-          method: method.toLowerCase(),
-          headers,
-          transformResponse: [defaultTransform, ...transformResponse],
-          ...rest
-        })
-      break
-    }
+    transformResponse.forEach(d => {
+      promise = promise.then(d)
+    })
 
     const actionToDispatch = {
       ...action,
