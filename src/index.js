@@ -3,10 +3,10 @@ import Token from './Token'
 export default ({
   keyIn = 'promise',
   keyOut = 'promise',
-  fetchOptions = {},
-  tokenOptions = {}
+  tokenKey = 'token-key',
+  fetchOptions = {}
 } = {}) => {
-  const token = new Token(tokenOptions)
+  const token = new Token(tokenKey)
 
   return () => next => action => {
     // check whether we need to transform the promise

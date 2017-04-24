@@ -1,10 +1,9 @@
-redux-object-to-promise
+react-native-redux-object-to-promise
 =============
 
-[![build status](https://img.shields.io/travis/mathieudutour/redux-object-to-promise/master.svg?style=flat-square)](https://travis-ci.org/mathieudutour/redux-object-to-promise)
-[![npm version](https://img.shields.io/npm/v/redux-object-to-promise.svg?style=flat-square)](https://www.npmjs.com/package/redux-object-to-promise)
+[![npm version](https://img.shields.io/npm/v/redux-object-to-promise.svg?style=flat-square)](https://www.npmjs.com/package/react-native-redux-object-to-promise)
 
-Redux [middleware](http://rackt.github.io/redux/docs/advanced/Middleware.html) middleware to transform an object into a promise.
+Redux [middleware](http://rackt.github.io/redux/docs/advanced/Middleware.html) middleware to transform an object into a promise. Uses `fetch` and `AsyncStorage`.
 
 ```js
 npm install --save redux-optimist-promise
@@ -15,14 +14,14 @@ npm install --save redux-optimist-promise
 First, import the middleware creator and include it in `applyMiddleware` when creating the Redux store. **You need to call it as a function (See later why on configuration section below):**
 
 ```js
-import middleware from 'redux-object-to-promise';
+import middleware from 'react-native-redux-object-to-promise';
 
 composeStoreWithMiddleware = applyMiddleware(
 	middleware({
 	  keyIn = 'promise',
 	  keyOut = 'promise',
-	  axiosOptions = {},
-	  tokenOptions = {storage = window.localStorage, key = 'token-key'}
+		tokenKey = 'token-key',
+	  fetchOptions = {}
 	})
 )(createStore);
 
@@ -32,7 +31,7 @@ To use the middleware, dispatch a `promise` property within the `meta` of the ac
 
 Example:
 
-The below action creator, when triggered `dispatch(addTodo('use redux-object-to-promise'))`
+The below action creator, when triggered `dispatch(addTodo('use react-native-redux-object-to-promise'))`
 
 ```js
 export function addTodo(text) {
@@ -53,9 +52,9 @@ will dispatch
 {
 	type: 'ADD_TODO',
 	payload: {
-		text: 'use redux-optimist-promise'
+		text: 'use react-native-redux-optimist-promise'
 	},
-	promise: axiosPromise({url: '/todo', method: 'post', data: {text}})
+	promise: Promise({url: '/todo', method: 'post', data: {text}})
 }
 ```
 
