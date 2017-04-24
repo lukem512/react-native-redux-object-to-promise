@@ -33,19 +33,25 @@ export default ({
       headers['x-access-token'] = token.get()
     }
 
-    const defaultTransform = function(data) {
+    const defaultTransform = function(response) {
       if (removeToken) {
         token.set(null)
       }
-      try {
-        const parsedData = JSON.parse(data)
-        if (catchToken && parsedData && parsedData.token) {
-          token.set(parsedData.token)
-        }
-        return parsedData
-      } catch (e) {
-        return data
+
+      const headers = response.headers || {};
+      const map = headers.map || {};
+      const contentType = ['content-type'];
+
+      if (contentType.indexOf('json')) {
+        return response.json().then(function(data) {
+          if (catchToken && data && data.token) {
+            token.set(data.token);
+          }
+          return { data };
+        });
       }
+
+      return response;
     }
 
     const {transformResponse = [], ...restOfFetchOptions} = fetchOptions
