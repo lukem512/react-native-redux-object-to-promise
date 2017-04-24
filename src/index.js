@@ -47,7 +47,7 @@ export default ({
       ? fetchOptions.baseURL + fetchOptions.url
       : fetchOptions.url
 
-    promise = fetch(url, {
+    const promise = fetch(url, {
       ...restOfFetchOptions,
       method: method.toUpperCase(),
       headers,
