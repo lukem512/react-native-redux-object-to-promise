@@ -14,12 +14,18 @@ export default ({
       return next(action)
     }
 
+    // check whether the fetch API is supported
+    if (!self.fetch) {
+      return new Error('Fetch not available. Please use `redux-object-to-promise`.')
+    }
+
     const {
       method = 'get',
       headers = {},
       catchToken = false,
       removeToken = false,
       authenticated = true,
+      promise: _promise = {},
       ...rest
     } = action.meta[keyIn]
 
@@ -43,9 +49,11 @@ export default ({
     }
 
     const {transformResponse = [], ...restOfFetchOptions} = fetchOptions
+
+    const _url = _promise.url
     const url = fetchOptions.baseURL
-      ? fetchOptions.baseURL + fetchOptions.url
-      : fetchOptions.url
+      ? fetchOptions.baseURL + _url
+      : _url
 
     let promise = fetch(url, {
       ...restOfFetchOptions,
