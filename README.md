@@ -1,7 +1,7 @@
 react-native-redux-object-to-promise
 =============
 
-[![npm version](https://img.shields.io/npm/v/redux-object-to-promise.svg?style=flat-square)](https://www.npmjs.com/package/react-native-redux-object-to-promise)
+[![npm version](https://img.shields.io/npm/v/react-native-redux-object-to-promise.svg?style=flat-square)](https://www.npmjs.com/package/react-native-redux-object-to-promise)
 
 Redux [middleware](http://rackt.github.io/redux/docs/advanced/Middleware.html) middleware to transform an object into a promise. Uses `fetch` and `AsyncStorage`.
 
