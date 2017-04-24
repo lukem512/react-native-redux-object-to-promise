@@ -25,7 +25,7 @@ export default ({
       catchToken = false,
       removeToken = false,
       authenticated = true,
-      promise: _promise = {},
+      url: _url = '',
       ...rest
     } = action.meta[keyIn]
 
@@ -50,7 +50,6 @@ export default ({
 
     const {transformResponse = [], ...restOfFetchOptions} = fetchOptions
 
-    const _url = _promise.url
     const url = fetchOptions.baseURL
       ? fetchOptions.baseURL + _url
       : _url
