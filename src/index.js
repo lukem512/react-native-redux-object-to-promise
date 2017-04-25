@@ -26,6 +26,7 @@ export default ({
       removeToken = false,
       authenticated = true,
       url: _url = '',
+      data = {},
       ...rest
     } = action.meta[keyIn]
 
@@ -64,7 +65,7 @@ export default ({
       ...restOfFetchOptions,
       method: method.toUpperCase(),
       headers,
-      body: fetchOptions.data,
+      body: data,
       ...rest
     }).then(defaultTransform)
 
