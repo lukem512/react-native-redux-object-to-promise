@@ -33,7 +33,9 @@ export default ({
     if (authenticated) {
       headers['x-access-token'] = token.get()
     }
-
+    headers['Accept'] = 'application/json';
+    headers['Content-Type'] = 'application/json';
+    
     const defaultTransform = function(response) {
       if (removeToken) {
         token.set(null)
@@ -65,7 +67,7 @@ export default ({
       ...restOfFetchOptions,
       method: method.toUpperCase(),
       headers,
-      body: data,
+      body: JSON.stringify(data),
       ...rest
     }).then(defaultTransform)
 
