@@ -33,16 +33,22 @@ export default ({
     if (authenticated) {
       headers['x-access-token'] = token.get()
     }
-    headers['Accept'] = 'application/json';
-    headers['Content-Type'] = 'application/json';
-    
+
+    if (method.toLowerCase() !== 'get') {
+      headers['Accept'] = 'application/json';
+      headers['Content-Type'] = 'application/json';
+    }
+
     const defaultTransform = function(response) {
+      if (!response.ok) {
+        return new Promise(function() {
+          return response.json().then(errData => new Error(errData.message));
+        });
+      }
+
       if (removeToken) {
         token.set(null)
       }
-
-      const headers = response.headers || {};
-      const map = headers.map || {};
       const contentType = ['content-type'];
 
       if (contentType.indexOf('json')) {
@@ -67,7 +73,7 @@ export default ({
       ...restOfFetchOptions,
       method: method.toUpperCase(),
       headers,
-      body: JSON.stringify(data),
+      ...(!!data && method !== 'GET') && {body: JSON.stringify(data)},
       ...rest
     }).then(defaultTransform)
 
