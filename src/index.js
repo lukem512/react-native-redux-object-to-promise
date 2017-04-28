@@ -41,8 +41,8 @@ export default ({
 
     const defaultTransform = function(response) {
       if (!response.ok) {
-        return new Promise(function() {
-          return response.json().then(errData => new Error(errData.message));
+        return new Promise(function(resolve, reject) {
+          return response.json().then(errData => reject(new Error(errData.message)));
         });
       }
 
