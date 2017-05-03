@@ -20,7 +20,7 @@ export default ({
     }
 
     const {
-      method = 'get',
+      method = 'GET',
       headers = {},
       catchToken = false,
       removeToken = false,
@@ -34,7 +34,7 @@ export default ({
       headers['x-access-token'] = token.get()
     }
 
-    if (method.toLowerCase() !== 'get') {
+    if (method.toUpperCase() !== 'GET') {
       headers['Accept'] = 'application/json';
       headers['Content-Type'] = 'application/json';
     }
@@ -73,7 +73,7 @@ export default ({
       ...restOfFetchOptions,
       method: method.toUpperCase(),
       headers,
-      ...(!!data && method !== 'GET') && {body: JSON.stringify(data)},
+      ...(!!data && method.toUpperCase() !== 'GET') && {body: JSON.stringify(data)},
       ...rest
     }).then(defaultTransform)
 
